@@ -1,4 +1,5 @@
 import React from 'react';
+import { Discord } from '../icons/discord';
 import { Github } from '../icons/github';
 import { Google } from '../icons/google';
 import { Facebook } from '../icons/facebook';
@@ -19,6 +20,7 @@ export const AuthorizerSocialLogin: React.FC<{
 }> = ({ urlProps, roles }) => {
   const { config } = useAuthorizer();
   const hasSocialLogin =
+    config.is_discord_login_enabled ||
     config.is_google_login_enabled ||
     config.is_github_login_enabled ||
     config.is_facebook_login_enabled ||
@@ -75,6 +77,20 @@ export const AuthorizerSocialLogin: React.FC<{
           >
             <Google />
             Continue with Google
+          </StyledButton>
+          <br />
+        </>
+      )}
+      {config.is_discord_login_enabled && (
+        <>
+          <StyledButton
+            appearance={ButtonAppearance.Default}
+            onClick={() => {
+              window.location.href = `${config.authorizerURL}/oauth_login/discord?${queryParams}`;
+            }}
+          >
+            <Discord />
+            Continue with Discord
           </StyledButton>
           <br />
         </>
